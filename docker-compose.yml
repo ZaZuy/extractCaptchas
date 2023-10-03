@@ -1,0 +1,11 @@
+version: '1'
+services:
+  tensorflow-serving:
+    image: tensorflow/serving
+    build: ./
+    ports:
+      - '8601:8601'
+    volumes:
+      - 'D:\\Python\\extractCaptchas:/extractCaptchas'
+    entrypoint: /bin/bash
+    command: -c "tensorflow_model_server --rest_api_port=8601 --allow_version_labels_for_unavailable_models --model_config_file=/extractCaptchas/config_model"
