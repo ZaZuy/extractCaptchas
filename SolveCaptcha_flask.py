@@ -12,7 +12,7 @@ def welcome():
     return json.dumps(
         {
             "code": 200,
-            "result": res
+            "result": res[0]
         }
     )
 
