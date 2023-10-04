@@ -1,10 +1,11 @@
-FROM ubuntu:16.04
+FROM ubuntu:latest
 
 RUN apt-get update
-RUN docker run -it -v D:\Python\extractCaptchas:/extractCaptchas -p 8601:8601 --entrypoint /bin/bash tensorflow/serving
-RUN docker tensorflow_model_server --rest_api_port=8601  --allow_version_labels_for_unavailable_models --model_config_file=/extractCaptchas/config_model
+
+RUN apt-get install -y python3-pip
 
 RUN mkdir /extractCaptchas
 WORKDIR /extractCaptchas
-COPY requirements.txt /Python/extractCaptchas/requirements.txt
-RUN pip install -r requirements.txt
+COPY requirements.txt /extractCaptchas/requirements.txt
+
+RUN pip3 install -r requirements.txt

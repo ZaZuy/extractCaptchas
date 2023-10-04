@@ -5,9 +5,10 @@ from flask import Flask, request
 
 app = Flask(__name__)
 
-@app.route('/api/v1/captcha/', methods=['GET'])
+@app.route('/api/v1/captcha/', methods=['POST'])
 def welcome():
-    res = utils.CaptchaSolver.make_prediction(utils.CaptchaSolver(), config.base64)
+    base64 = request.form.get('data')
+    res = utils.CaptchaSolver.make_prediction(utils.CaptchaSolver(), base64)
     return json.dumps(
         {
             "code": 200,
@@ -16,4 +17,4 @@ def welcome():
     )
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80)
+    app.run(debug=True, host="10.5.0.4", port=5000) #debug for change code realtime update
