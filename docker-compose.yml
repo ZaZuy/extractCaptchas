@@ -1,14 +1,19 @@
 version: '1'
 services:
   tensorflow-serving:
-    image: tensorflow/serving
-    build: ./
+    image: tensorflow/serving:latest
     ports:
-      - '8601:8601'
+      - '8500:8500'
+      - '8501:8501'
     volumes:
-      - '.\:/extractCaptchas'
-    entrypoint: /bin/bash
-    command: -c "tensorflow_model_server --rest_api_port=8601 --allow_version_labels_for_unavailable_models --model_config_file=/extractCaptchas/serving_docker.config"
+      - ./models/fbcaptcha:/models/fbcaptcha
+    command:
+      - tensorflow_model_server
+      - --model_name=fbcaptcha
+      - --model_base_path=/models/fbcaptcha
+      - --rest_api_port=8501
+      - --model_version_policy=specific  # Use specific versioning
+      - --allow_version_labels=True  # Allow specifying version labels
     networks:
       mynet:
         ipv4_address: 10.5.0.5

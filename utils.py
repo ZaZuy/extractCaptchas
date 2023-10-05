@@ -23,7 +23,7 @@ class CaptchaSolver:
         self.num_to_char = layers.experimental.preprocessing.StringLookup(
             vocabulary=self.char_to_num.get_vocabulary(), invert=True
         )
-        self.url = 'http://10.5.0.5:8601/v1/models/solveCaptchas:predict'
+        self.url = 'http://10.5.0.5:8501/v1/models/fbcaptcha:predict'
 
     def encode_single_sample(self, img_path, label):
         img = tf.io.read_file(img_path)
